@@ -1,24 +1,43 @@
 package com.example.leonteva_v_1;
-
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
-
+public class PersonalAreaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        setContentView(R.layout.activity_personal_area);
+
+        Button btnExit = findViewById(R.id.btn_exit);
+        Button btnOnline = findViewById(R.id.btn_online);
+        Button btnCamera = findViewById(R.id.btn_camera);
+        ImageView ivSettings = findViewById(R.id.iv_settings);
+
+        // Выход
+        btnExit.setOnClickListener(v -> {
+            startActivity(new Intent(PersonalAreaActivity.this, LoginActivity.class));
+            finish();
+        });
+
+        // Онлайн (Toast)
+        btnOnline.setOnClickListener(v -> {
+            Toast.makeText(PersonalAreaActivity.this, "Вы онлайн", Toast.LENGTH_SHORT).show();
+        });
+
+        // Системная камера
+        btnCamera.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivity(cameraIntent);
+        });
+
+        // Переход в настройки
+        ivSettings.setOnClickListener(v -> {
+            startActivity(new Intent(PersonalAreaActivity.this, SettingsActivity.class));
         });
     }
 }
